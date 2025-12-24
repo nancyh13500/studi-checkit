@@ -73,3 +73,33 @@ function createList(PDO $pdo, string $title, int $userId, int $categoryId): bool
 
     return false;
 }
+
+/**
+ * Supprime une liste et tous ses items associés
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param int $listId L'ID de la liste à supprimer
+ * @return bool Retourne true si la suppression a réussi, false sinon
+ */
+function deleteList(PDO $pdo, int $listId): bool
+{
+    try {
+        $pdo->beginTransaction();
+
+        // Supprimer d'abord tous les items de la liste
+        $deleteItems = $pdo->prepare("DELETE FROM item WHERE list_id = :list_id");
+        $deleteItems->bindValue(':list_id', $listId, PDO::PARAM_INT);
+        $deleteItems->execute();
+
+        // Ensuite supprimer la liste
+        $deleteList = $pdo->prepare("DELETE FROM list WHERE id = :id");
+        $deleteList->bindValue(':id', $listId, PDO::PARAM_INT);
+        $deleteList->execute();
+
+        $pdo->commit();
+        return true;
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        return false;
+    }
+}

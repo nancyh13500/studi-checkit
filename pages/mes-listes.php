@@ -1,9 +1,9 @@
 <?php
 
-require_once 'templates/header.php';
-require_once 'lib/pdo.php';
-require_once 'lib/list.php';
-require_once 'lib/category.php';
+require_once __DIR__ . "/../templates/header.php";
+require_once __DIR__ . "/../lib/pdo.php";
+require_once __DIR__ . "/../lib/list.php";
+require_once __DIR__ . "/../lib/category.php";
 
 $categoryId = null;
 $lists = [];
@@ -43,7 +43,7 @@ $categories = getCategories($pdo);
             if (!empty($lists)) {
                 foreach ($lists as $list) { ?>
                     <div class="col-md-4 my-2">
-                        <div class="card w-50">
+                        <div class="card w-100">
                             <div class="card-header d-flex align-items-center justify-content-evenly">
                                 <i class="bi bi-card-checklist"></i>
                                 <h3 class="card-title"><?= $list['title'] ?></h3>
@@ -74,11 +74,12 @@ $categories = getCategories($pdo);
 
         <?php } else { ?>
             <p>Pour consulter vos listes, vous devez être connecté:</p>
-            <a href="login.php" class="btn btn-outline-primary me-2 w-50">Login</a>
+            <a href="../login.php" class="btn btn-outline-primary me-2 w-50">Login</a>
         <?php } ?>
     </div>
 
 </div>
 
 
-<?php require_once __DIR__ . "/templates/footer.php" ?>
+<?php require_once __DIR__ . "/../templates/footer.php" ?>
+

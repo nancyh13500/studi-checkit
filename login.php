@@ -9,6 +9,9 @@ if (isset($_POST['loginUser'])) {
     $user = verifyUserLoginPassword($pdo, $_POST['email'], $_POST['password']);
 
     if ($user) {
+        // Régénérer l'ID de session pour prévenir les attaques de fixation de session
+        session_regenerate_id(true);
+
         // on va le connecter => session
         $_SESSION['user'] = $user;
 

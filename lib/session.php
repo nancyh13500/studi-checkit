@@ -1,13 +1,30 @@
 <?php
 
 // Constantes de configuration
-define('COOKIE_DOMAIN', '.checkit.local');
 define('TOKENS_FILE', __DIR__ . '/tokens.json');
+
+/**
+ * Obtient le domaine du cookie selon l'environnement
+ *
+ * @return string|null Le domaine du cookie ou null pour localhost
+ */
+function getCookieDomain(): ?string
+{
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+    if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
+        // Si c'est localhost, ne pas définir de domaine
+        return null;
+    }
+
+    // Sinon, utiliser le domaine personnalisé
+    return '.checkit.local';
+}
 
 session_set_cookie_params([
     'lifetime' => 3600,
     'path' => '/',
-    'domain' => COOKIE_DOMAIN,
+    'domain' => getCookieDomain(),
     'httponly' => true
 ]);
 
@@ -82,7 +99,7 @@ function createRememberToken(array $user, int $duration = 2592000): string
     saveTokens($tokens);
 
     // Définir le cookie avec le token
-    setcookie('remember_token', $token, time() + $duration, '/', COOKIE_DOMAIN, true, true);
+    setcookie('remember_token', $token, time() + $duration, '/', getCookieDomain(), true, true);
 
     return $token;
 }
@@ -132,7 +149,7 @@ function deleteToken(string $token): bool
     }
 
     // Supprimer le cookie
-    setcookie('remember_token', '', time() - 3600, '/', COOKIE_DOMAIN, true, true);
+    setcookie('remember_token', '', time() - 3600, '/', getCookieDomain(), true, true);
 
     return true;
 }

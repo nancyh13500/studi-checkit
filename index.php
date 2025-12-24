@@ -28,7 +28,11 @@ require_once __DIR__ . "/templates/header.php";
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">Créer un nombre illimité de listes</h3>
-                    <a href="#" class="btn btn-primary">S'inscrire</a>
+                    <?php if (isUserConnected()) { ?>
+                        <a href="pages/mes-listes.php" class="btn btn-primary">Voir la liste</a>
+                    <?php } else { ?>
+                        <a href="pages/inscription.php" class="btn btn-primary">S'inscrire</a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -39,7 +43,11 @@ require_once __DIR__ . "/templates/header.php";
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">Classer les listes par catégories</h3>
-                    <a href="#" class="btn btn-primary">S'inscrire</a>
+                    <?php if (isUserConnected()) { ?>
+                        <a href="pages/mes-listes.php" class="btn btn-primary">Voir la liste</a>
+                    <?php } else { ?>
+                        <a href="pages/inscription.php" class="btn btn-primary">S'inscrire</a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -50,7 +58,11 @@ require_once __DIR__ . "/templates/header.php";
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">Retrouver facilement vos listes</h3>
-                    <a href="#" class="btn btn-primary">S'inscrire</a>
+                    <?php if (isUserConnected()) { ?>
+                        <a href="pages/mes-listes.php" class="btn btn-primary">Voir la liste</a>
+                    <?php } else { ?>
+                        <a href="pages/inscription.php" class="btn btn-primary">S'inscrire</a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

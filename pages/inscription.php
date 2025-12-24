@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/lib/session.php";
-require_once __DIR__ . "/lib/pdo.php";
-require_once __DIR__ . "/lib/user.php";
+require_once __DIR__ . "/../lib/session.php";
+require_once __DIR__ . "/../lib/pdo.php";
+require_once __DIR__ . "/../lib/user.php";
 
 $errors = [];
 
@@ -45,7 +45,7 @@ if (isset($_POST['registerUser'])) {
         if ($user) {
             // Inscription réussie, connecter l'utilisateur automatiquement
             $_SESSION['user'] = $user;
-            header('location: index.php');
+            header('location: ../index.php');
             exit();
         } else {
             $errors[] = "Cet email est déjà utilisé";
@@ -53,7 +53,7 @@ if (isset($_POST['registerUser'])) {
     }
 }
 
-require_once __DIR__ . "/templates/header.php";
+require_once __DIR__ . "/../templates/header.php";
 ?>
 
 <div class="container col-xxl-8 px-4 py-5">
@@ -92,8 +92,9 @@ require_once __DIR__ . "/templates/header.php";
     </form>
 
     <div class="mt-3">
-        <p>Déjà un compte ? <a href="login.php">Se connecter</a></p>
+        <p>Déjà un compte ? <a href="../login.php">Se connecter</a></p>
     </div>
 </div>
 
-<?php require_once __DIR__ . "/templates/footer.php" ?>
+<?php require_once __DIR__ . "/../templates/footer.php" ?>
+
