@@ -5,7 +5,7 @@ services:
     build: .
     container_name: studi-checkit-web
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - .:/var/www/html
     # Si j’ajoute une base MySQL plus tard, je lierai le service ici :
