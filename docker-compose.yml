@@ -8,24 +8,54 @@ services:
       - "8081:80"
     volumes:
       - .:/var/www/html
-    # Si j’ajoute une base MySQL plus tard, je lierai le service ici :
-    # depends_on:
-    #   - db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
 
-  # Service MySQL prêt à être activé plus tard si besoin :
-  # db:
-  #   image: mysql:8.0
-  #   container_name: studi-checkit-db
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: studi_checkit
-  #     MYSQL_USER: studi
-  #     MYSQL_PASSWORD: studi
-  #   volumes:
-  #     - db_data:/var/lib/mysql
-  #     - ./bdd/studi_checkit.sql:/docker-entrypoint-initdb.d/studi_checkit.sql
-  #   ports:
-  #     - "3306:3306"
+  db:
+    image: mysql:8.0
+    container_name: studi-checkit-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: studi_checkit
+      MYSQL_USER: studi
+      MYSQL_PASSWORD: studi
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./bdd/studi_checkit.sql:/docker-entrypoint-initdb.d/studi_checkit.sql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    networks:
+      - app-network
 
-#volumes:
-#  db_data:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: studi-checkit-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: studi
+      PMA_PASSWORD: studi
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8082:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
