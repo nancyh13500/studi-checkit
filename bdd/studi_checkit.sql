@@ -130,6 +130,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     `nickname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
     `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
     `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+    `reset_token` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `reset_token_expires` datetime DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 

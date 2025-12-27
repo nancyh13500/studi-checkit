@@ -49,7 +49,7 @@ $categories = getCategories($pdo);
                         <div class="card w-100">
                             <div class="card-header d-flex align-items-center justify-content-evenly">
                                 <i class="bi bi-card-checklist"></i>
-                                <h3 class="card-title"><?= $list['title'] ?></h3>
+                                <h3 class="card-title text-center"><?= $list['title'] ?></h3>
                             </div>
                             <div class="card-body d-flex flex-column ">
                                 <?php $items = getListItems($pdo, $list['id']); ?>

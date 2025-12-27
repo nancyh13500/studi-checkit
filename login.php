@@ -51,9 +51,14 @@ require_once __DIR__ . "/templates/header.php";
             <label for="password" class="form-label">Mot de passe</label>
             <input type="password" name="password" id="password" class="form-control">
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="remember_me" id="remember_me" value="1" class="form-check-input">
-            <label for="remember_me" class="form-check-label">Se souvenir de moi</label>
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+            <div class="form-check">
+                <input type="checkbox" name="remember_me" id="remember_me" value="1" class="form-check-input">
+                <label for="remember_me" class="form-check-label">Se souvenir de moi</label>
+            </div>
+            <div>
+                <a href="forgot-password.php">Mot de passe oublié ?</a>
+            </div>
         </div>
 
         <input type="submit" name="loginUser" value="Connexion" class="btn btn-primary">
