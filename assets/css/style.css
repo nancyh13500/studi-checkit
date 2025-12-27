@@ -94,6 +94,11 @@ h3 {
     font-size: 3rem;
 }
 
+.btn-outline-secondary:hover {
+    background-color: var(--dark);
+    border-color: var(--bs-secondary-border-subtle);
+}
+
 .card-body ul i {
     color: var(--primary);
 }

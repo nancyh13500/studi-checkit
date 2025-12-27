@@ -11,8 +11,8 @@ require_once __DIR__ . "/templates/header.php";
             <h1 class="display-5 fw-bold lh-1 mb-3">Gardez vos listes avec vous !</h1>
             <p class="lead">Bienvenue sur CheckIt, votre nouvelle plateforme de création de listes de tâches en ligne. Avec CheckIt, vous pouvez facilement créer des listes de choses à faire pour tous les aspects de votre vie. Que vous planifiez votre prochain voyage, que vous organisiez votre travail ou que vous fassiez des courses, CheckIt vous aide à rester organisé et à suivre vos tâches en toute simplicité.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+                <a href="/pages/ajout-modification-liste.php" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Ajout liste</a>
+                <a href="/pages/category.php" type="button" class="btn btn-outline-primary btn-lg px-4">Ajout catégorie</a>
             </div>
         </div>
     </div>

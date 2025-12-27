@@ -24,6 +24,9 @@ $categories = getCategories($pdo);
         <?php if (isUserConnected()) { ?>
             <a href="ajout-modification-liste.php" class="btn btn-primary">Ajouter une liste</a>
         <?php } ?>
+        <?php if (isUserConnected()) { ?>
+            <a href="category.php" class="btn btn-primary">Ajouter une catégorie</a>
+        <?php } ?>
         <form method="get">
             <label for="category" class="form-label">Catégorie</label>
             <select name="category" id="category" onchange="this.form.submit()">
@@ -53,9 +56,16 @@ $categories = getCategories($pdo);
                                 <?php if ($items) { ?>
                                     <ul class="list-group">
                                         <?php foreach ($items as $item) { ?>
-                                            <li class="list-group-item"><a class="me-2" href="ajout-modification-liste.php?id=<?= $list['id'] ?>&action=updateStatusListItem&redirect=list&item_id=<?= $item['id'] ?>&status=<?= !$item['status'] ?>"><i class="bi bi-check-circle<?= ($item['status'] ? '-fill' : '') ?>"></i></a> <?= $item['name'] ?></li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <i class="bi bi-check-circle<?= ($item['status'] ? '-fill text-success' : '') ?> me-2" style="font-size: 1.1rem;"></i>
+                                                <span class="<?= $item['status'] ? 'text-decoration-line-through text-muted' : '' ?>">
+                                                    <?= htmlspecialchars($item['name']) ?>
+                                                </span>
+                                            </li>
                                         <?php } ?>
                                     </ul>
+                                <?php } else { ?>
+                                    <p class="text-muted mb-0">Aucun item dans cette liste</p>
                                 <?php } ?>
                                 <div class="d-flex justify-content-between align-items-end mt-2">
                                     <a href="ajout-modification-liste.php?id=<?= $list['id'] ?>" class="btn btn-primary">Voir la liste</a>
@@ -82,4 +92,3 @@ $categories = getCategories($pdo);
 
 
 <?php require_once __DIR__ . "/../templates/footer.php" ?>
-

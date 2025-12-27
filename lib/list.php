@@ -75,6 +75,24 @@ function createList(PDO $pdo, string $title, int $userId, int $categoryId): bool
 }
 
 /**
+ * Met à jour une liste existante
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param int $listId L'ID de la liste à modifier
+ * @param string $title Le nouveau titre de la liste
+ * @param int $categoryId L'ID de la nouvelle catégorie
+ * @return bool Retourne true si la mise à jour a réussi, false sinon
+ */
+function updateList(PDO $pdo, int $listId, string $title, int $categoryId): bool
+{
+    $query = $pdo->prepare("UPDATE list SET title = :title, category_id = :category_id WHERE id = :id");
+    $query->bindValue(':title', $title, PDO::PARAM_STR);
+    $query->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+    $query->bindValue(':id', $listId, PDO::PARAM_INT);
+    return $query->execute();
+}
+
+/**
  * Supprime une liste et tous ses items associés
  *
  * @param PDO $pdo Instance de connexion à la base de données
@@ -102,4 +120,75 @@ function deleteList(PDO $pdo, int $listId): bool
         $pdo->rollBack();
         return false;
     }
+}
+
+/**
+ * Crée un nouvel item dans une liste
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param string $name Le nom de l'item
+ * @param int $listId L'ID de la liste
+ * @return bool|array Retourne les données de l'item créé si succès, false sinon
+ */
+function createItem(PDO $pdo, string $name, int $listId): bool|array
+{
+    $query = $pdo->prepare("INSERT INTO item (name, status, list_id) VALUES (:name, 0, :list_id)");
+    $query->bindValue(':name', $name, PDO::PARAM_STR);
+    $query->bindValue(':list_id', $listId, PDO::PARAM_INT);
+
+    if ($query->execute()) {
+        $itemId = $pdo->lastInsertId();
+        $query = $pdo->prepare("SELECT * FROM item WHERE id = :id");
+        $query->bindValue(':id', $itemId, PDO::PARAM_INT);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return false;
+}
+
+/**
+ * Met à jour un item
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param int $itemId L'ID de l'item
+ * @param string $name Le nouveau nom de l'item
+ * @return bool Retourne true si la mise à jour a réussi, false sinon
+ */
+function updateItem(PDO $pdo, int $itemId, string $name): bool
+{
+    $query = $pdo->prepare("UPDATE item SET name = :name WHERE id = :id");
+    $query->bindValue(':name', $name, PDO::PARAM_STR);
+    $query->bindValue(':id', $itemId, PDO::PARAM_INT);
+    return $query->execute();
+}
+
+/**
+ * Supprime un item
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param int $itemId L'ID de l'item à supprimer
+ * @return bool Retourne true si la suppression a réussi, false sinon
+ */
+function deleteItem(PDO $pdo, int $itemId): bool
+{
+    $query = $pdo->prepare("DELETE FROM item WHERE id = :id");
+    $query->bindValue(':id', $itemId, PDO::PARAM_INT);
+    return $query->execute();
+}
+
+/**
+ * Met à jour le statut d'un item (coché/décoché)
+ *
+ * @param PDO $pdo Instance de connexion à la base de données
+ * @param int $itemId L'ID de l'item
+ * @param bool $status Le nouveau statut (true = coché, false = décoché)
+ * @return bool Retourne true si la mise à jour a réussi, false sinon
+ */
+function updateItemStatus(PDO $pdo, int $itemId, bool $status): bool
+{
+    $query = $pdo->prepare("UPDATE item SET status = :status WHERE id = :id");
+    $query->bindValue(':status', $status ? 1 : 0, PDO::PARAM_INT);
+    $query->bindValue(':id', $itemId, PDO::PARAM_INT);
+    return $query->execute();
 }
