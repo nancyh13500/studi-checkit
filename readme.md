@@ -15,5 +15,5 @@ CheckIt est une plateforme permettant de créer et gérer des listes de tâches.
 
 ### User 2
 
-- **Email** : nancy@test.com
-- **Mot de passe** : nancytest
+- **Email** : nancy@nancy.com
+- **Mot de passe** : nancy
