@@ -99,7 +99,12 @@ require_once __DIR__ . "/../templates/header.php";
 <div class="container col-xxl-8 px-4 py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1><?= $action === 'editCategory' ? 'Modifier une catégorie' : 'Gérer les catégories' ?></h1>
-        <a href="mes-listes.php" class="btn btn-outline-primary">Retour aux listes</a>
+        <div class="d-flex gap-2">
+            <a href="ajout-modification-liste.php" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Créer une nouvelle liste
+            </a>
+            <a href="mes-listes.php" class="btn btn-outline-primary">Retour aux listes</a>
+        </div>
     </div>
 
     <?php if ($success) { ?>
