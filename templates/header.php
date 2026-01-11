@@ -3,6 +3,17 @@ require_once __DIR__ . "/../lib/session.php";
 
 // Déterminer le chemin de base selon l'emplacement du fichier qui inclut header.php
 $basePath = (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) ? '../' : '';
+
+// Fonction pour générer les chemins des assets (CSS, images, JS)
+function asset($path) {
+    // Si le chemin commence déjà par /, le retourner tel quel
+    if (strpos($path, '/') === 0) {
+        return $path;
+    }
+    // Sinon, utiliser le chemin de base
+    global $basePath;
+    return $basePath . $path;
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +25,7 @@ $basePath = (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) ? '../' : '';
     <title>To Do List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= asset('assets/css/style.css') ?>">
 </head>
 
 <body>
@@ -22,7 +33,7 @@ $basePath = (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) ? '../' : '';
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <div class="col-md-3 mb-2 mb-md-0">
                 <a href="<?= $basePath ?>index.php" class="d-inline-flex link-body-emphasis text-decoration-none">
-                    <img src="/assets/images/logo-checkit.png" alt="Logo CheckIt" width="180">
+                    <img src="<?= asset('assets/images/logo-checkit.png') ?>" alt="Logo CheckIt" width="180">
                 </a>
             </div>
 
@@ -35,6 +46,7 @@ $basePath = (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) ? '../' : '';
 
             <div class="col-md-3 text-end">
                 <?php if (isUserConnected()) { ?>
+                    <span class="me-2">Bienvenue <?= htmlspecialchars($_SESSION['user']['nickname'] ?? 'Utilisateur') ?></span>
                     <a href="<?= $basePath ?>logout.php" class="btn btn-outline-primary me-2">Déconnexion</a>
                 <?php } else { ?>
                     <a href="<?= $basePath ?>login.php" class="btn btn-outline-primary me-2">Se connecter</a>

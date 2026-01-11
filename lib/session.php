@@ -17,8 +17,14 @@ function getCookieDomain(): ?string
         return null;
     }
 
-    // Sinon, utiliser le domaine personnalisé
-    return '.checkit.local';
+    // Pour o2switch, extraire le domaine principal (sites-webnex.fr)
+    // Ne pas utiliser de sous-domaine pour le cookie, utiliser le domaine parent
+    if (strpos($host, 'sites-webnex.fr') !== false) {
+        return '.sites-webnex.fr';
+    }
+
+    // Par défaut, ne pas définir de domaine (le navigateur utilisera le domaine actuel)
+    return null;
 }
 
 session_set_cookie_params([
